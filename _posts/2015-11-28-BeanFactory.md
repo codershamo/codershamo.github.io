@@ -47,3 +47,6 @@ Bean facotry的实现应该尽可能支持标准bean的生命周期。所有的�
 当关闭一个bean factory时，运行下面的生命周期方法：<br>
 1. DisposableBean's {@code destroy}<br>
 2. a custom destroy-method definition
+
+![beanfactory.png](http://codershamo.github.io/public/img/beanfactory.png)
+![beanfactory.png](/public/img/beanfactory.png)
