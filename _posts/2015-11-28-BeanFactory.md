@@ -5,7 +5,7 @@ title: Spring源码解析-BeanFactory
 
 ##BeanFactory
 
-###简介
+###BeanFactory功能介绍
 
 BeanFactory是访问spring容器的根接口，它是一个bean容器最基本的客户端视图。
 高级接口如ListableBeanFactory和ConfigrablueBeanFactory用来实现特定目标。
@@ -48,5 +48,50 @@ Bean facotry的实现应该尽可能支持标准bean的生命周期。所有的�
 1. DisposableBean's {@code destroy}<br>
 2. a custom destroy-method definition
 
-![beanfactory.png](http://codershamo.github.io/public/img/beanfactory.png)
-![beanfactory.png](/public/img/beanfactory.png)
+### BeanFactory方法
+BeanFactory的所有方法：
+![beanfactory](/public/img/beanfactory.png)
+下面逐一进行讲解：
+
+* **String FACTORY_BEAN_PREFIX = "&"**:<br>
+用于间接引用一个FactoryBean实例并将它与它所生成的beans区分开来。例如，假如一个名为myJndiObject的bean是一个FactoryBean,
+&myJndiObject将返回这个factory，而不是这个factory返回的实例。
+
+* **getBean()**:<br>
+返回一个共享或独立的实例，根据具体的bean。<br>
+这个方法允许一个spring BeanFactory替代单例或原型模式。对于单例的beans，调用者可以保持对它们的引用。<br>
+将别名翻译回相应的标准bean名称。如果这个bean没有在当前工厂实例中找到，则会访问其父工厂。<br>
+也可以根据类型返回相应的bean实例，或者是名称与类型同时满足的bean实例。<br>
+
+* **Object getBean(String name, Object... args)**:<br>
+这个方法允许用具体的构造方法参数和工厂方法参数来覆盖bean中默认的参数。<br>
+args： 当创建一个具体的bean时所指定的参数（只有当创建一个新的实例而不是获得已有的实例时使用）。
+
+* **boolean containsBean(String name)**:<br>
+判断当前的factory是否包含给定名称的bean定义或是由外部注册的单例实例。如果给定名称是一个别名，此方法将其他转化回其对应的标准bean名称。
+如果当前factory是（分层）hierachical的，如果当前factory中找不到，则会到其父factory中寻找。如果一个bean定义或单例实例被找到，
+无论这个bean定义是具体的还是抽象的，延迟或马上的（lazy or eager)的，是否在scope中的，这个方法都会返回true。
+
+* **boolean isSingleton(String name)**:<br>
+判断一个bean是否是一个共享的单例。
+*注意：* 这个方法返回false并不一定表明是当前bean是独立的实例，而只表明它是非单例的实例，它也可能是一个作用域内（scoped）的实例。
+请使用isPrototype()方法来判断独立实例。
+
+* **boolean isPrototype(String name)**:<br>
+与isSingleton类似，*注意*同样。
+
+* **boolean isTypeMatch(String name, ResolvableType typeToMatch)**:<br>
+检查bean的名称与类型是否匹配。即判断getBean方法根据name返回的实例类型与typeToMatch是否匹配。
+
+* **Class<?> getType(String name)**:<br>
+确定给定名称的bean的类型。即判断getBean方法根据name返回的实例的类型。<br>
+对于一个FactoryBean，返回这个FactoryBean创建的对象类型，与FactoryBean的getObjectType()返回的类型相同。
+
+* **String[] getAliases(String name)**:<br>
+返回指定名称的所有别名。所有的这些别名在getBean调用时都指向同一个名称。如果name是一个别名，那它对应的原始bean name和其他别名都将被返回，
+而此别名为数组的第一个元素。
+
+### BeanFactory的继承接口
+继承BeanFactory的接口如下：
+![BeanFactory sub](/public/img/beanfactory sub.png)
+
