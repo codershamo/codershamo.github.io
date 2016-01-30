@@ -5,7 +5,8 @@ title: 三种深度拷贝方式的比较
 
 对于深度拷贝，常见有主要有三种方式。通过序列化和反序列化，通过json转换，以及手动赋值，下面对这三种方式进行简单的比较。
 用来拷贝测试的对象如下：
-`
+
+```
 class User implements Serializable{
     private String name;
     private String pwd;
@@ -44,10 +45,12 @@ class User implements Serializable{
         this.age = age;
     }
 }
-`
+```
+
 * 序列化方式：
 这里采用apache.common.lang包中的SerializationUtils.clone()工具类。这里测试进行10w次简单对象的深度拷贝所用的时间, 
 序列化方式深拷贝的测试代码如下：
+
 ```
  User user = new User();
  user.setName("shamo");
@@ -60,6 +63,7 @@ class User implements Serializable{
  }
  System.out.println(System.currentTimeMillis() - start);
 ```
+
 在我的笔记本上的平均耗时约为**2100ms**。
 
 * json转换方式：
@@ -78,6 +82,7 @@ class User implements Serializable{
      return JSON.parseObject(json, Object.class);
  }
 ```
+
 耗时约为**900ms**。
 
 * 手动赋值方式：
