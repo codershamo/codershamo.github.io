@@ -1,3 +1,8 @@
+---
+layout: post
+title: fastjson的基本使用方法
+---
+
 ## fastjson的基本使用方法：
 
 1 **fastjson主要的API**
