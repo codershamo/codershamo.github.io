@@ -4,7 +4,7 @@ title: 三种深度拷贝方式的比较
 ---
 
 对于深度拷贝，常见有主要有三种方式。通过序列化和反序列化，通过json转换，以及手动赋值，下面对这三种方式进行简单的比较。
-用来拷贝测试的对象为：
+用来拷贝测试的对象如下：
 `
 class User implements Serializable{
     private String name;
