@@ -31,6 +31,7 @@ Java已经支持使用Class.newInstance()动态实例化类的实例。但是类
 Objenesis有两个主要的接口：
 
 **ObjectInstantiator** -实例化一个类的多个实例
+
 ```
 interface ObjectInstantiator{
 	Object new Instance();
@@ -38,11 +39,13 @@ interface ObjectInstantiator{
 ```
 
 **InstantiatorStrategy** -对一个类的实例化进行特殊的策略处理（随着类的不同而不同）
+
 ```
 interface InstantiatorStrategy{
 	ObjectInstantiator newInstantiaorOf(Class type);	
 }
 ```
+
 **注意**：所有的Objenesis类都在org.objenesis包中
 
 ### **使用方法**
@@ -54,18 +57,24 @@ interface InstantiatorStrategy{
 * **Serilizable compliant** -与java标准序列化方式实例一个对象的行为一致。即第一个不可序列化的父类构造器将被调用。 但是，readResolve不会被调用并且不检查对象是否是可序列化的。
 
 最简单的使用Objenesis的方法是使用ObjenesisStd(Standard) 和ObjenesisSerializer(Serializable compliant)。这两种方式会自动选择最好的策略。
+
 ```
 Objenesis objenesis = new ObjenesisStd(); // or ObjenesisSerialializer
 ```
+
 实现Objenesis接口后，就可以为一个特定的类型创建一个ObjectInstantiator
+
 ```
 ObjectInstantiator thingInstantiator = objenesis.getInstantiatorOf(MyThingy.class);
 ```
-最后，可以使用这个去新的实例
+
+最后，可以使用这个去新建实例
+
 ```
 MyThingy thingy1 = (MyThingy)thingyInstantiator.newInstnace();
 MyThingy thingy2 = (MyThingy)thingInstantiator.newInstance();
 ```
+
 ### 性能和多线程
 为了提高性能，最好尽可能多的使用ObjectInstantiator 对象。 例如，如果要实例化一个类的多个对象，请使用相同的ObjectInstantiator。
 InstantiatorStrategy和ObjectInstantiator都可以在多线程中共享并发使用，它们是线程安全的。
@@ -84,4 +93,4 @@ MyThingy thingy2 = (MyThingy)thingyInstantiator.newInstance();
 MyThingy thingy3 = (MyThingy)thingyInstantiator.newInstance();
 MyThingy thingy4 = (MyThingy)thingyInstantiator.newInstance();
 ```
-（译自 [http://objenesis.org/]）
+（译自 ![http://objenesis.org/](http://objenesis.org/)）
