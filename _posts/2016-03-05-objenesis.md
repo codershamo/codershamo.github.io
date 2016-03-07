@@ -3,11 +3,11 @@ layout: post
 title: objenesis的基本使用方法
 ---
 
-## objenesis简介：
+### objenesis简介：
 
    objenesis是一个不型java库用来实例化一个特定class的对象。
 
-## 使用场合：
+### 使用场合：
 Java已经支持使用Class.newInstance()动态实例化类的实例。但是类必须拥有一个合适的构造器。有很多场景下不能使用这种方式实例化类，比如：
 
 * 构造器需要参数
@@ -18,7 +18,7 @@ Java已经支持使用Class.newInstance()动态实例化类的实例。但是类
 
 因此，在类库中经常会有类必须拥有一个默认构造器的限制。Objenesis通过绕开对象实例构造器来克服这个限制。
 
-## 典型使用
+### 典型使用
 实例化一个对象而不调用构造器是一个特殊的任务，然而在一些特定的场合是有用的：
 
 * **序列化，远程调用和持久化** -对象需要实例化并存储为到一个特殊的状态，而没有调用代码。
@@ -27,7 +27,7 @@ Java已经支持使用Class.newInstance()动态实例化类的实例。但是类
 
 * **容器框架** -对象可以以非标准的方式被动态实例化。
 
-## **快速入门**
+### **快速入门**
 Objenesis有两个主要的接口：
 
 **ObjectInstantiator** -实例化一个类的多个实例
@@ -79,7 +79,7 @@ MyThingy thingy2 = (MyThingy)thingInstantiator.newInstance();
 为了提高性能，最好尽可能多的使用ObjectInstantiator 对象。 例如，如果要实例化一个类的多个对象，请使用相同的ObjectInstantiator。
 InstantiatorStrategy和ObjectInstantiator都可以在多线程中共享并发使用，它们是线程安全的。
 
-## 代码示例：
+### 代码示例：
 ```
 Objenesis objenesis = new ObjenesisStd(); // or ObjenesisSerializer
 MyThingy thingy1 = (MyThingy) objenesis.newInstance(MyThingy.class);
@@ -93,4 +93,4 @@ MyThingy thingy2 = (MyThingy)thingyInstantiator.newInstance();
 MyThingy thingy3 = (MyThingy)thingyInstantiator.newInstance();
 MyThingy thingy4 = (MyThingy)thingyInstantiator.newInstance();
 ```
-（译自 ![http://objenesis.org/](http://objenesis.org/)）
+（译自 [http://objenesis.org/](http://objenesis.org/)）
